@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
-from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
+import json
+from unipath import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).ancestor(3)
@@ -19,8 +20,21 @@ BASE_DIR = Path(__file__).ancestor(3)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'r+5sdbxxs1%71whg4xz5wfgr(gl@s6^91ehz*_cu&fgrnsx7jo'
+with open("credentials.json") as f:
+    secret = json.loads(f.read())
+
+def get_secret(secret_name, secrets=secret):
+    try:
+        return secrets[secret_name]
+    except:
+        errorMessage = "Variable %s no existe" % secret_name
+        raise ImproperlyConfigured(errorMessage)
+
+
+
+SECRET_KEY = get_secret('SECRET_KEY')
 
 # Application definition
 
