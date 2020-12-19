@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es-CL">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}{% endblock title %}</title>
+
+    {% block header %}
+    {% endblock header %}
+</head>
+
+<body>
+    <div id="app" class="d-flex flex-column">
+        {% block menu %}
+        {% endblock menu %}
+
+        <main class="py-4 my-4 d-flex align-items-center">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        {% block content %}
+                        {% endblock content %}
+
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {% block footer %}
+        {% endblock footer %}
+    </div>
+</body>
+
+</html>
