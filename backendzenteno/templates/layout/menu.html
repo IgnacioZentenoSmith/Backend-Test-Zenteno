@@ -8,7 +8,8 @@
         </ul>
         <ul class="navbar-nav m-auto text-center">
 
-
+            {% if not user.is_anonymous %}
+            <!-- Estoy logeado -->
             <li class="nav-item mx-2">
                 <a class="nav-link" href="">
                     <span style="font-size: 1.5em;">
@@ -36,20 +37,29 @@
                     Menus
                 </a>
             </li>
-
-
+            {% endif %}
         </ul>
 
         <!-- Right Side Of Navbar -->
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
-
+            {% if not user.is_anonymous %}
+            <!-- Estoy logeado -->
             <li class="nav-item">
-                <a class="nav-link" href="">Login <i class="fas fa-sign-in-alt"></i></a>
+                <a class="nav-link" href="{% url 'users_app:user-profile' user.id %}">Mi perfil <i class="fas fa-user"></i></a>
             </li>
             <li class="nav-item"></li>
-                <a class="nav-link" href="">Registrar <i class="fas fa-user-plus"></i></a>
+                <a class="nav-link" href="{% url 'users_app:user-logout' %}">Logout <i class="fas fa-sign-out-alt"></i></a>
             </li>
+            {% else %}
+            <!-- No estoy logeado -->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'users_app:user-login' %}">Login <i class="fas fa-sign-in-alt"></i></a>
+            </li>
+            <li class="nav-item"></li>
+                <a class="nav-link" href="{% url 'users_app:user-register' %}">Registrar <i class="fas fa-user-plus"></i></a>
+            </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

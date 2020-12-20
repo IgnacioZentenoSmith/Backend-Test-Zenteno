@@ -1,20 +1,30 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.urls import reverse
+
+from .managers import UserManager
+
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
-    USER_ROLE_CHOICE = (
-      (1, 'employee'),
-      (2, 'lunch manager'),
+	# Constants
+	USER_ROLE_CHOICE = (
+      	(1, 'Empleado'),
+      	(2, 'Manager de almuerzos'),
     )
+	USERNAME_FIELD = 'user_email'
 
-    #PK = id
-    """ Modelo de los usuarios del sistema """
-    user_name = models.CharField(max_length=50)
-    user_email = models.EmailField(unique=True, max_length=50)
-    user_role = models.PositiveSmallIntegerField(choices=USER_ROLE_CHOICE)
+    # Fields
+	user_name = models.CharField(max_length=50)
+	user_email = models.EmailField(unique=True, max_length=50)
+	user_role = models.PositiveSmallIntegerField(choices=USER_ROLE_CHOICE)
 
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+	is_staff = models.BooleanField(default=False)
+	is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'user_email'
+	# Manager
+	objects = UserManager()
+
+	# Standard methods
+	def __str__(self):
+		return self.user_name + self.user_email
