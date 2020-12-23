@@ -1,0 +1,58 @@
+{% extends "meals/meals_base.html" %}
+{% load static %}
+
+{% block title %}
+Lista de platos
+{% endblock title %}
+
+{% block subcontent %}
+
+<h5 class="card-title mb-4">Lista de platos disponibles</h5>
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <table id="tablaCourses" class="table table-hover w-auto text-nowrap btTable" data-show-export="true"
+                data-pagination="true" data-click-to-select="true" data-show-columns="true" data-sortable="true"
+                data-search="true" data-live-search="true" data-buttons-align="left" data-search-align="right"
+                data-server-sort="false">
+                <thead>
+                    <tr>
+                        <th scope="col" data-field="courseID" data-sortable="true">ID</th>
+                        <th scope="col" data-field="courseNombre" data-sortable="true">Nombre</th>
+                        <th scope="col" data-field="courseTipo" data-sortable="true">Tipo</th>
+
+                        <th scope="col" data-field="Accion" data-sortable="true">Acciones</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in course_list %}
+                    <tr>
+                        <td>{{ course.id }}</td>
+                        <td>{{ course.course_name }}</td>
+                        <td>{{ course.get_course_type_display }}</td>
+                        
+                        <td>
+                            <a class="btn btn-primary" href="{% url 'meals_app:course-edit' course.id %}"
+                            role="button">Editar</a>
+
+                            <form style="display: inline-block;" action="{% url 'meals_app:course-delete' course.id %}"
+                                method="post">
+                                {% csrf_token %}
+                                <button class="btn btn-danger" type="submit">Eliminar</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script src="{% static 'js/components/initBTtables.js' %}"></script>
+<script src="{% static 'js/components/checkDeleteSubmit.js' %}"></script>
+{% endblock subcontent %}
