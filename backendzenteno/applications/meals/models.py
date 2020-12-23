@@ -1,22 +1,9 @@
 from django.db import models
-
 from model_utils.models import TimeStampedModel
 
 from .managers import MealManager, CourseManager
 
 # Create your models here.
-class Meal(TimeStampedModel):
-    # Constants
-    # Fields
-    meal_name = models.CharField(max_length=150)
-
-    # Manager
-    objects = MealManager()
-
-    # Standard methods
-    def __str__(self):
-	    return self.meal_name
-
 class Course(TimeStampedModel):
     # Constants
     ENTRADA = 'EN'
@@ -26,7 +13,6 @@ class Course(TimeStampedModel):
         (ENTRADA, 'Entrada'),
         (PLATO_PRINCIPAL, 'Plato principal'),
         (POSTRE, 'Postre'),
-
     ]
 
     # Fields
@@ -45,20 +31,16 @@ class Course(TimeStampedModel):
 
     # Standard methods
     def __str__(self):
-	    return self.course_name + self.course_type
+        return self.course_name
 
-class Meal_courses(TimeStampedModel):
+class Meal(TimeStampedModel):
     # Constants
     # Fields
-    meal_id = models.ForeignKey(Meal, on_delete=models.CASCADE)
-    course_id = models.ForeignKey(Course, on_delete=models.CASCADE)
+    meal_courses = models.ManyToManyField(Course)
 
     # Manager
-
-    #Meta
-    class Meta:
-        unique_together = ('meal_id', 'course_id')
+    objects = MealManager()
 
     # Standard methods
     def __str__(self):
-	    return 'id meal: ' + str(self.meal_id) + '; id course: ' + str(self.course_id)
+        return str(self.id) + str(self.meal_courses.all())
