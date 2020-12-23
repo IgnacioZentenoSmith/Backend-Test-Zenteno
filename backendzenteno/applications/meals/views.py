@@ -51,7 +51,7 @@ class MealCreateView(LoginRequiredMixin, FormView):
 
         return super(MealCreateView, self).form_valid(form)
 
-class MealUpdateView(LoginRequiredMixin, FormView):
+class MealUpdateView(LoginRequiredMixin, UpdateView):
     """ Editar un almuerzo """
     login_url = reverse_lazy('users_app:user-login')
     template_name = 'meals/meal_edit.html'

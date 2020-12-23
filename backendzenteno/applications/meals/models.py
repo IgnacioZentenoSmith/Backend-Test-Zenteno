@@ -43,4 +43,5 @@ class Meal(TimeStampedModel):
 
     # Standard methods
     def __str__(self):
-        return str(self.id) + str(self.meal_courses.all())
+        meal_courses = ", ".join(str(courses) for courses in self.meal_courses.all())
+        return "{}: {}".format(self.id ,meal_courses)

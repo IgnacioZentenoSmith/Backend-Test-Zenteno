@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu' == request.path %} active {% endif %}" 
+                            href="{% url 'menus_app:menu-list' %}">Lista de menús</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu_create' == request.path %} active {% endif %}" " 
+                            href="{% url 'menus_app:menu-create' %}">Crear menú</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body py-3 my-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                {% block subcontent %}
+                                {% endblock subcontent %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
