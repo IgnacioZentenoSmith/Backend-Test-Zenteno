@@ -1,0 +1,43 @@
+{% extends "meals/meals_base.html" %}
+{% load static %}
+
+{% block title %}
+Crear plato
+{% endblock title %}
+
+{% block subcontent %}
+
+<h5 class="card-title mb-4">Formulario para editar plato <strong>{{ course.course_name  }}</strong></h5>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="form-group row">
+        <label for="course_name" class="col-md-4 col-form-label text-md-right">Nombre del plato</label>
+
+        <div class="col-md-6">
+            {{ form.course_name  }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="course_type" class="col-md-4 col-form-label text-md-right">Tipo de plato</label>
+
+        <div class="col-md-6">
+            {{ form.course_type }}
+        </div>
+    </div>
+
+
+    <div class="form-group row mb-0">
+        <div class="col-md-8 offset-md-4">
+            <button type="submit" class="btn btn-primary">
+                Editar
+            </button>
+
+        </div>
+    </div>
+</form>
+
+
+{% endblock subcontent %}
