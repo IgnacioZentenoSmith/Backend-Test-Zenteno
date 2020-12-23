@@ -11,10 +11,20 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'meals_app:meal-list' %}">Lista de almuerzos</a>
+                            <a class="nav-link {% if '/meals/meal' == request.path %} active {% endif %}" 
+                            href="{% url 'meals_app:meal-list' %}">Lista de almuerzos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'meals_app:course-list' %}">Lista de platos</a>
+                            <a class="nav-link {% if '/meals/meal_create' == request.path %} active {% endif %}" " 
+                            href="{% url 'meals_app:meal-create' %}">Crear almuerzo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/meals/course' == request.path %} active {% endif %}" 
+                            href="{% url 'meals_app:course-list' %}">Lista de platos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/meals/course_create' == request.path %} active {% endif %}" 
+                            href="{% url 'meals_app:course-create' %}">Crear plato</a>
                         </li>
                     </ul>
                 </div>
