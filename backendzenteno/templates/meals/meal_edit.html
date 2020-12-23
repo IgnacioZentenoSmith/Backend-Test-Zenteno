@@ -1,0 +1,61 @@
+{% extends "meals/meals_base.html" %}
+{% load static %}
+
+{% block title %}
+Crear plato
+{% endblock title %}
+
+{% block subcontent %}
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+<h5 class="card-title mb-4">Formulario para editar un almuerzo de 3 platos</h5>
+<div class="alert alert-info" role="alert">
+    Un almuerzo obligatoriamente siempre llevará 3 platos.
+</div>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group row">
+        <label for="entrada" class="col-md-4 col-form-label text-md-right">Entrada</label>
+
+        <div class="col-md-6">
+            {{ form.entrada }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="primer_plato" class="col-md-4 col-form-label text-md-right">Primer plato</label>
+
+        <div class="col-md-6">
+            {{ form.primer_plato }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="postre" class="col-md-4 col-form-label text-md-right">Postre</label>
+
+        <div class="col-md-6">
+            {{ form.postre }}
+        </div>
+    </div>
+
+    <div class="form-group row mb-0">
+        <div class="col-md-6 offset-md-4">
+            <button type="submit" class="btn btn-primary">
+                Editar
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock subcontent %}
