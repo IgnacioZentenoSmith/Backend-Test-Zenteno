@@ -17,3 +17,7 @@ class UserManager(BaseUserManager, models.Manager):
     
     def create_user(self, user_email, password=None, **kwargs):
         return self._create_user(user_email, password, False, True, **kwargs)
+
+    def get_empleados_emails(self):
+        query_result = self.filter(user_role = 1).values_list('user_email', flat=True)
+        return query_result
