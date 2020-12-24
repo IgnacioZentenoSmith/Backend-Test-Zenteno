@@ -15,7 +15,7 @@ from django.views.generic.edit import FormView
 from .models import Meal, Course
 
 from .forms import (
-    CreateMealForm,
+    MealForm,
     UpdateMealForm
 )
 
@@ -34,7 +34,7 @@ class MealCreateView(LoginRequiredMixin, FormView):
     """ Crear un almuerzo """
     login_url = reverse_lazy('users_app:user-login')
     template_name = 'meals/meal_create.html'
-    form_class = CreateMealForm
+    form_class = MealForm
     
     success_url = reverse_lazy('meals_app:meal-list')
     
@@ -55,8 +55,26 @@ class MealUpdateView(LoginRequiredMixin, UpdateView):
     """ Editar un almuerzo """
     login_url = reverse_lazy('users_app:user-login')
     template_name = 'meals/meal_edit.html'
+    model = Meal
     form_class = UpdateMealForm
     success_url = reverse_lazy('meals_app:meal-list')
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        # Encontrar la instancia
+        meal = Meal.objects.get(id = self.kwargs['pk'])
+        # Limpiar todas las many to many de esta instancia
+        meal.meal_courses.clear()
+        # Buscar los nuevos platos
+        entrada = Course.objects.get(course_name=form.cleaned_data['entrada'])
+        primer_plato = Course.objects.get(course_name=form.cleaned_data['primer_plato'])
+        postre = Course.objects.get(course_name=form.cleaned_data['postre'])
+        # Agregar los nuevos platos
+        meal.meal_courses.add(entrada, primer_plato, postre)
+        return super().form_valid(form)
 
 class MealDeleteView(LoginRequiredMixin, DeleteView):
     """ Borrar un almuerzo """
