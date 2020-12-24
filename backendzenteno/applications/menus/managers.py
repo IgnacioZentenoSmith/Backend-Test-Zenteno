@@ -13,5 +13,15 @@ class MenuManager(models.Manager):
         menu.menu_date = date
         menu.save()
 
+    def is_valid_meal_for_today(self, meal_id, today):
+        today_menu = self.get(menu_date = str(today))
+        today_meals = today_menu.menu_meals.all()
+        for today_meal in today_meals:
+            if today_meal.id == meal_id:
+                return True
+        return False
 class Menu_mealManager(models.Manager):
     """ Manager del modelo Menu_meal """
+
+class Menu_meal_userManager(models.Manager):
+    """ Manager del modelo Menu_meal_user """
