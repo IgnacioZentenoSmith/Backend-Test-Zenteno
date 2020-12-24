@@ -56,6 +56,19 @@ Lista de menus
                 </tbody>
             </table>
         </div>
+        <div class="col-12">
+            <form method="POST">
+                {% csrf_token %}
+            
+                <div class="form-group row mb-0">
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            Enviar notificaciones
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

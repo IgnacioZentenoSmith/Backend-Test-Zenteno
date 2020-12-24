@@ -13,12 +13,13 @@ from django.views.generic import (
 from django.views.generic.edit import FormView
 
 from .models import Menu, Menu_meal
+from ..apirest.slackapi import SlackAPIMethods
+
 
 from .forms import (
     MenuForm,
     MenuEditForm
 )
-
 # Create your views here.
 # CRUD views menu
 class MenuListView(LoginRequiredMixin, ListView):
@@ -26,10 +27,20 @@ class MenuListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('users_app:user-login')
     template_name = 'menus/menu.html'
     context_object_name = 'menu_list'
+    success_url = reverse_lazy('menus_app:menu-list')
 
     def get_queryset(self):
         return Menu.objects.all()
-    
+
+    def post(self, request, *args, **kwargs):
+        
+        slack = SlackAPIMethods()
+        slack_users = slack.send_empleados_direct_message()
+        
+        data = Menu.objects.all()
+        return render(request, self.template_name, {'menu_list': data})
+
+
 class MenuCreateView(LoginRequiredMixin, FormView):
     """ Crear un menu """
     login_url = reverse_lazy('users_app:user-login')
