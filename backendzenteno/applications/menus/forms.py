@@ -93,3 +93,57 @@ class MenuEditForm(forms.ModelForm, MenuForm):
         return form_date
 
     
+class SelectMenuForm(forms.Form):
+    """ Formulario de selección de almuerzo del menú disponible """
+    # Seleccionar almuerzo y un comentario opcional
+    meals = forms.ModelChoiceField(
+        queryset=None,
+        required=True,
+    )
+
+    menu = forms.IntegerField()
+
+    
+    commentary = forms.CharField(
+        max_length=300, 
+        widget=forms.TextInput(
+            attrs={
+                'size':'40'
+            }
+        ),
+        required=False
+    )
+
+    class Meta:
+        fields = (
+            'meals',
+            'menu', 
+            'commentary', 
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        today = date.today()
+        modelInstance = Menu.objects.get(menu_date = str(today))
+        # menu_meals Queryset
+        self.fields['meals'].queryset = modelInstance.menu_meals.all()
+        self.fields['menu'].initial = modelInstance.id
+
+    def clean_meals(self):
+        meal = self.cleaned_data['meals']
+        today = date.today()
+
+        is_valid = Menu.objects.is_valid_meal_for_today(meal.id, today)
+        if is_valid:
+            return meal
+        else:
+            self.add_error('meals', 'Seleccione un almuerzo válido.')
+
+    def clean_commentary(self):
+        commentary = self.cleaned_data['commentary']
+        if len(commentary) > 300:
+            self.add_error('commentary', 'Su comentario ha superado el límite.')
+        elif len(commentary) == 0:
+            return ''
+        else:
+            return commentary
