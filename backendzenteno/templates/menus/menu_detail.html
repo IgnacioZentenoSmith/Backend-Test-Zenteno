@@ -1,0 +1,27 @@
+{% extends "menus/menus_base.html" %}
+{% load static %}
+
+{% block title %}
+Detalle de menú
+{% endblock title %}
+
+{% block subcontent %}
+
+<h5 class="card-title mb-4">Detalle del menu: {{menu_detail.id}}</h5>
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <p>Fecha: <strong>{{ menu_detail.menu_date }}</strong></p>
+
+        <ul class="list-group"></ul>
+        {% for meals in menu_detail.menu_meals.all %}
+            <li class="list-group-item">
+                {{ forloop.counter }})
+                {% for courses in meals.meal_courses.all %}
+                    - {{ courses }}
+                {% endfor %}
+            </li>
+        {% endfor %}
+        </ul>
+                    
+{% endblock subcontent %}

@@ -1,0 +1,47 @@
+{% extends "menus/menus_base.html" %}
+{% load static %}
+
+{% block title %}
+Lista de menus
+{% endblock title %}
+
+{% block subcontent %}
+
+<h5 class="card-title mb-4">Lista de menús seleccionados</h5>
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <div class="table-responsive">
+            <table id="tablaMenus" class="table table-hover w-auto text-nowrap btTable" data-show-export="true"
+                data-pagination="true" data-click-to-select="true" data-show-columns="true" data-sortable="true"
+                data-search="true" data-live-search="true" data-buttons-align="left" data-search-align="right"
+                data-server-sort="false">
+                <thead>
+                    <tr>
+                        <th scope="col" data-field="menuID" data-sortable="true">ID</th>
+                        <th scope="col" data-field="menuYear" data-sortable="true">Fecha</th>
+                        <th scope="col" data-field="menuMonth" data-sortable="true">Almuerzo</th>
+                        <th scope="col" data-field="menuDay" data-sortable="true">Comentario</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for menu_meal_user in menu_meal_user_list %}
+                    <tr>
+                        <td>{{ menu_meal_user.id }}</td>
+                        <td>{{ menu_meal_user.menu_meal_id.menu_id }}</td>
+                        <td>{{ menu_meal_user.menu_meal_id.meal_id }}</td>
+                        <td>{{ menu_meal_user.commentary }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/components/initBTtables.js' %}"></script>
+{% endblock subcontent %}

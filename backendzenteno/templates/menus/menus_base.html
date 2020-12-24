@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        {% if user.user_role == 2 %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu' == request.path %} active {% endif %}" 
+                            href="{% url 'menus_app:menu-list' %}">Lista de menús</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu_create' == request.path %} active {% endif %}" 
+                            href="{% url 'menus_app:menu-create' %}">Crear menú</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu_list_selections' == request.path %} active {% endif %}"
+                            href="{% url 'menus_app:menu-list-selections' %}">Ver menús seleccionados</a>
+                        </li>
+                        {% elif user.user_role == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu_my_meals/' == request.path %} active {% endif %}" 
+                            href="{% url 'menus_app:my-menu-meals' user.id %}">Mis almuerzos</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                <div class="card-body py-3 my-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                {% block subcontent %}
+                                {% endblock subcontent %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Sistema de Almuerzos
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+      <div class="col-md-8">
+
+          <div class="card shadow">
+              <div class="card-header">
+                Bienvenido a la aplicación
+              </div>
+
+              <div class="card-body py-3 my-3">
+                  <div class="container-fluid">
+                      <div class="row">
+                          <div class="col-12">
+                            <p>Usuario: <strong>{{user.user_name}}</strong></p>
+                            <br>
+                            <p>Rol: <strong>{{user.get_user_role_display}}</strong></p> 
+                          </div>
+                      </div>
+                  </div>
+
+
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>
+
+{% endblock content %}

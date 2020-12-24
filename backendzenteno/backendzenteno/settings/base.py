@@ -36,16 +36,46 @@ def get_secret(secret_name, secrets=secret):
 
 SECRET_KEY = get_secret('SECRET_KEY')
 
-# Application definition
 
-INSTALLED_APPS = [
+# SLACK CONFIG
+SLACK_CLIENT_ID = get_secret('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = get_secret('SLACK_CLIENT_SECRET')
+SLACK_VERIFICATION_TOKEN = get_secret('SLACK_VERIFICATION_TOKEN')
+SLACK_BOT_USER_TOKEN = get_secret('SLACK_BOT_USER_TOKEN')
+
+# Application definition
+# Django native apps
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+)
+
+# Custom apps
+LOCAL_APPS = (
+    'applications.users',
+    'applications.home',
+    'applications.menus',
+    'applications.meals',
+    'applications.apirest',
+)
+
+# Third party apps
+THIRD_PARTY_APPS = (
+    'rest_framework',
+    'rest_framework.authtoken', 
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -77,6 +107,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backendzenteno.wsgi.application'
 
+
+AUTH_USER_MODEL = 'users.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

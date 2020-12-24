@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/meals/meal' == request.path %} active {% endif %}" 
+                            href="{% url 'meals_app:meal-list' %}">Lista de almuerzos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/meals/meal_create' == request.path %} active {% endif %}" " 
+                            href="{% url 'meals_app:meal-create' %}">Crear almuerzo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/meals/course' == request.path %} active {% endif %}" 
+                            href="{% url 'meals_app:course-list' %}">Lista de platos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/meals/course_create' == request.path %} active {% endif %}" 
+                            href="{% url 'meals_app:course-create' %}">Crear plato</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body py-3 my-3">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                {% block subcontent %}
+                                {% endblock subcontent %}
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}
