@@ -49,7 +49,7 @@ class UserRegisterView(FormView):
 class LoginUser(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('users_app:user-profile')
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         user = authenticate(
