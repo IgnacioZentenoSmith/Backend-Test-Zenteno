@@ -49,4 +49,4 @@ class Menu_meal_user(TimeStampedModel):
 
     # Standard methods
     def __str__(self):
-	    return str(self.menu_id) + str(self.meal_id) + str(self.user_id)
+	    return str(self.menu_meal_id) + str(self.user_id)
