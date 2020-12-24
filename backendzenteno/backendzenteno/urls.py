@@ -23,4 +23,5 @@ urlpatterns = [
     re_path('', include('applications.users.urls')),
     re_path('', include('applications.menus.urls')),
     re_path('', include('applications.meals.urls')),
+    re_path('', include('applications.apirest.urls')),
 ]
