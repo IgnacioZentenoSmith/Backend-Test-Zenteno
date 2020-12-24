@@ -18,6 +18,10 @@
                             <a class="nav-link {% if '/menus/menu_create' == request.path %} active {% endif %}" " 
                             href="{% url 'menus_app:menu-create' %}">Crear menú</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if '/menus/menu_my_meals/' == request.path %} active {% endif %}" " 
+                            href="{% url 'menus_app:my-menu-meals' user.id %}">Mis almuerzos</a>
+                        </li>
                     </ul>
                 </div>
 
