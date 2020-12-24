@@ -49,8 +49,9 @@ class SlackAPIMethods():
         empleados = self.get_empleados_from_slack_users()
         print(empleados)
         for empleado in empleados:
-            msg = empleado['email'] + ' - ' + empleado['token'] + ' - ' + empleado['uuid']
-            self.send_slack_message(empleado['id'], msg)
+            message = 'Estimado, para seleccionar su almuerzo para el día de hoy ingrese al siguiente link: \n'
+            form_url = settings.BASE_URL + '/menus/select_menu/' + empleado['uuid']
+            self.send_slack_message(empleado['id'], (message + form_url))
 
     def send_slack_message(self, channel='#general', message=''):
         self.slack.chat.post_message(channel, message)

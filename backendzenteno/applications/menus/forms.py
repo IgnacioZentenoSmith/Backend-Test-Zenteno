@@ -93,3 +93,78 @@ class MenuEditForm(forms.ModelForm, MenuForm):
         return form_date
 
     
+class SelectMenuForm(forms.Form):
+    """ Formulario de selección de almuerzo del menú disponible """
+    # Seleccionar almuerzo y un comentario opcional
+    meals = forms.ModelChoiceField(
+        queryset=None,
+        required=True,
+    )
+
+    menu = forms.IntegerField()
+
+    
+    commentary = forms.CharField(
+        max_length=300, 
+        widget=forms.TextInput(
+            attrs={
+                'size':'40'
+            }
+        ),
+        required=False
+    )
+
+    class Meta:
+        fields = (
+            'meals',
+            'menu', 
+            'commentary', 
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        today = date.today()
+        modelInstance = Menu.objects.get(menu_date = str(today))
+
+        now = datetime.datetime.now()
+        # Restricción de tiempo
+        if (now.hour >= 11):
+            self.fields['meals'].disabled = True
+            self.fields['menu'].disabled = True
+            self.fields['commentary'].disabled = True
+
+        # menu_meals Queryset
+        self.fields['meals'].queryset = modelInstance.menu_meals.all()
+        self.fields['menu'].initial = modelInstance.id
+
+    def clean_meals(self):
+        if self.is_expired:
+            self.add_error('meals', 'La selección ha expirado.')
+
+        meal = self.cleaned_data['meals']
+        today = date.today()
+
+        is_valid = Menu.objects.is_valid_meal_for_today(meal.id, today)
+        if is_valid:
+            return meal
+        else:
+            self.add_error('meals', 'Seleccione un almuerzo válido.')
+
+    def clean_commentary(self):
+        if self.is_expired:
+            self.add_error('commentary', 'La selección ha expirado.')
+
+        commentary = self.cleaned_data['commentary']
+        if len(commentary) > 300:
+            self.add_error('commentary', 'Su comentario ha superado el límite.')
+        elif len(commentary) == 0:
+            return ''
+        else:
+            return commentary
+
+    def is_expired(self):
+        now = datetime.datetime.now()
+        # Restricción de tiempo
+        if (now.hour >= 11):
+            return True
+        return False

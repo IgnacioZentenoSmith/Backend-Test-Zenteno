@@ -28,6 +28,7 @@
                 </a>
             </li>
 
+            {% if user.user_role == 2 %}
             <li class="nav-item mx-2">
                 <a class="nav-link" href="{% url 'meals_app:meal-list' %}">
                     <span style="font-size: 1.5em;">
@@ -36,6 +37,7 @@
                     Almuerzos
                 </a>
             </li>
+            {% endif %}
             {% endif %}
         </ul>
 
