@@ -9,6 +9,8 @@ from rest_framework.authtoken.models import Token
 
 from .managers import UserManager
 
+import uuid
+
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -23,6 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	user_name = models.CharField(max_length=50)
 	user_email = models.EmailField(unique=True, max_length=50)
 	user_role = models.PositiveSmallIntegerField(choices=USER_ROLE_CHOICE)
+	user_uuid = models.UUIDField(default=uuid.uuid4, editable=False) 
 
 	is_staff = models.BooleanField(default=False)
 	is_active = models.BooleanField(default=True)
