@@ -40,5 +40,10 @@ urlpatterns = [
         views.MyMenuMealsView.as_view(),
         name='my-menu-meals',
     ),
+    path(
+        'menus/menu_list_selections', 
+        views.MenuMealsListView.as_view(),
+        name='menu-list-selections',
+    ),
 
 ]

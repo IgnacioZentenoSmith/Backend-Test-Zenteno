@@ -112,7 +112,7 @@ class SelectMenuView(FormView):
         return super().form_valid(form)
 
 class MyMenuMealsView(LoginRequiredMixin, ListView):
-    """ Crear un menu """
+    """ Ver mi propia selección """
     login_url = reverse_lazy('users_app:user-login')
     template_name = 'menus/menu_my_meals.html'
     context_object_name = 'menu_meal_user_list'
@@ -121,3 +121,20 @@ class MyMenuMealsView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         menu_meal_user = Menu_meal_user.objects.filter(user_id = self.kwargs['pk'])
         return menu_meal_user
+
+
+class MenuMealsListView(LoginRequiredMixin, ListView):
+    """ Ver todas las selecciones """
+    login_url = reverse_lazy('users_app:user-login')
+    template_name = 'menus/menu_list_selections.html'
+    context_object_name = 'menu_meal_user_list'
+    success_url = reverse_lazy('menus_app:menu-list-selections')
+
+    def get_queryset(self):
+        get_empleados = User.objects.filter(user_role = 1)
+        menu_meal_user_list = []
+        for empleado in get_empleados:
+            menu_meal_user = Menu_meal_user.objects.filter(user_id = empleado.id)
+            if menu_meal_user.exists():
+                menu_meal_user_list.append(menu_meal_user)
+        return menu_meal_user_list
